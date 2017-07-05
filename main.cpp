@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <windows.h>
 #include <limits>
+#include <conio.h>
 
 using namespace std;
 
@@ -11,8 +12,8 @@ class Character
     public:
         Character();
         ~Character();
-        void setpoints(long long s);
-        long long points;
+        void setpoints(long double s);
+        long double points;
 };
 
 Character::Character()
@@ -24,28 +25,29 @@ Character::~Character()
     points = 0;
 }
 
-void Character::setpoints(long long s)
+void Character::setpoints(long double s)
 {
     points+=s;
 }
 
 void rebirth();
 
-long long cost;
-long long goal;
-long long currency;
-long long rebirthprice;
+long double cost;
+long double goal;
+long double currency;
+long double rebirthprice;
 
 int main()
 {
     char pinput[20];
     char playername[20];
-    long long pointadd;
-    pointadd = 1;
+    long double pointadd;
+    char quitval[2];
+    pointadd = .1;
     cost = 10;
     goal = 100;
     currency = 0;
-    rebirthprice = 5;
+    rebirthprice = 4;
     while(1)
     {
         cout<<"Enter Name: ";
@@ -73,15 +75,25 @@ int main()
     {
         while(1)
         {
-            cout<<playername<<"'s Points:\n";
-            cout<<player.points;
-            cout<<"\nGoal: "<<goal<<"\nCurrency: "<<currency;
-            cout<<"\n\nBlank. Click\n\n1. Points Per Click X2: Points Per Click: "<<pointadd*2<<" Cost: "<<cost<<"\n\n2. Rebirth. Currency Required: "<<rebirthprice<<"\n\nInput: ";
+            while(1)
+            {
+                system("CLS");
+                player.setpoints(pointadd);
+                cout<<playername<<"'s Points:\n";
+                cout<<player.points;
+                cout<<"\nGoal: "<<goal<<"\nCurrency: "<<currency;
+                cout<<"\n\nBlank. Click\n\n1. Points Per Click X1.1: Points Per Click: "<<pointadd*1.1<<" Cost: "<<cost<<"\n\n2. Rebirth. Currency Required: "<<rebirthprice<<"\n\n3. Quit."<<"\n\nInput: ";
+                if(kbhit())
+                {
+                    break;
+                }
+            }
             cin.getline(pinput,20,'\n');
             if(cin.fail())
             {
                 system("CLS");
                 cout<<"Invalid Input\n";
+                cin.get();
                 cin.clear();
                 cin.ignore(std::numeric_limits<streamsize>::max(),'\n');
                 continue;
@@ -89,24 +101,20 @@ int main()
             system("CLS");
             break;
         }
-        if(strcmp(pinput,"")==0)
-        {
-            system("CLS");
-            player.setpoints(pointadd);
-        }
-        else if(strcmp(pinput,"1")==0)
+        if(strcmp(pinput,"1")==0)
         {
             if(cost<=player.points)
             {
                 system("CLS");
                 player.points = player.points - cost;
-                pointadd*=2;
-                cost*=4;
+                pointadd*=1.1;
+                cost*=1.2;
             }
             else
             {
                 system("CLS");
-                cout<<"Invalid Input. Not Enough Points.\n";
+                cout<<"Invalid Input. Not Enough Points. Press Enter To Resume.\n";
+                cin.get();
             }
         }
         else if(strcmp(pinput,"2")==0)
@@ -123,14 +131,19 @@ int main()
             else
             {
                 system("CLS");
-                cout<<"Invalid Input. Not Enough Currency.\n";
+                cout<<"Invalid Input. Not Enough Currency. Press Enter To Resume.\n";
+                cin.get();
             }
+        }
+        else if(strcmp(pinput,"3")==0)
+        {
+            break;
         }
         else{}
         if(player.points>=goal)
         {
-            currency += 1;
-            goal *= 5;
+            currency += .1;
+            goal *= 1.5;
         }
     }
 }
