@@ -11,9 +11,8 @@ class Character
     public:
         Character();
         ~Character();
-        void setpoints(int s);
-        int printstats();
-        int points;
+        void setpoints(long long s);
+        long long points;
 };
 
 Character::Character()
@@ -25,29 +24,23 @@ Character::~Character()
     points = 0;
 }
 
-void Character::setpoints(int s)
+void Character::setpoints(long long s)
 {
     points+=s;
 }
 
-int Character::printstats()
-{
-    cout<<points;
-    return 0;
-}
+void rebirth();
 
-int rebirth();
-
-int cost;
-int goal;
-int currency;
-int rebirthprice;
+long long cost;
+long long goal;
+long long currency;
+long long rebirthprice;
 
 int main()
 {
     char pinput[20];
     char playername[20];
-    int pointadd;
+    long long pointadd;
     pointadd = 1;
     cost = 10;
     goal = 100;
@@ -81,7 +74,7 @@ int main()
         while(1)
         {
             cout<<playername<<"'s Points:\n";
-            player.printstats();
+            cout<<player.points;
             cout<<"\nGoal: "<<goal<<"\nCurrency: "<<currency;
             cout<<"\n\nBlank. Click\n\n1. Points Per Click X2: Points Per Click: "<<pointadd*2<<" Cost: "<<cost<<"\n\n2. Rebirth. Currency Required: "<<rebirthprice<<"\n\nInput: ";
             cin.getline(pinput,20,'\n');
@@ -142,11 +135,10 @@ int main()
     }
 }
 
-int rebirth()
+void rebirth()
 {
     cost = 10;
     goal = 100;
     currency = 0;
-    rebirthprice *= 3;
-    return 0;
+    rebirthprice *= 2;
 }
